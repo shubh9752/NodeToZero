@@ -1,33 +1,30 @@
+// events in node js 
 
-const nodeMailer=require('nodemailer');
-const {Gkey}=require('./secretKey')
+const http=require('http');
 
-const sendMailer=async()=>{
-    //1 creating a email transporter
-    const transporter=nodeMailer.createTransport({
-        //selecting a smtp 
-        service:'gmail',
-        auth:{
-            user:'shubhamkumar3.sk@gmail.com',
-            pass:Gkey
-        }
-    })
-    //2 configuring email content
-    const emailOptions={
-        from:'shubhamkumar3.sk@gmail.com',
-        to:'killersid581@yahoo.in',
-        subject:'Thankyou for subcribe',
-        text:'thankyou for subscribing us',
-        html:'<h1>thankyou for subscribing us</h1>'
-    };
-    try {
-        //3 sending the email
-        const info=await transporter.sendMail(emailOptions);
-        console.log(info+" sent successfuly");
-        
-    } catch (error) {
-        console.log("email not send",error);
+const server=http.createServer((req,res)=>{
+    //checking method
+    if(req.method=="POST"){
+        //expecting data from client
+        let body="";
+        req.on('data',(chunk)=>{
+              body += chunk.toString();
+        });
+        //waiting for full stream to finish
+        req.on('end',()=>{
+            console.log(body);
+            res.end('data recieved');
+        });
+       
+    }else{
+        console.log(`function ends here`);
+        res.end('welcome to shubham server');
     }
+   
+})
 
-}
-sendMailer();
+server.listen(8080,()=>{
+    console.log('server is running on port 8080');
+})
+
+//https://go.postman.co/workspace/71cd8bbe-d360-4d41-8e6d-671ee090a8fc/documentation/33658677-ee6b4622-313e-4584-9b74-882c9a9cd84c?entity=request-205f8e07-5a52-4479-baf9-fcc1b565fde7
