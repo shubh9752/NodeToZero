@@ -3,14 +3,35 @@ const fs=require('fs');
 
 console.log(`starting`);
 try {
-    fs.writeFileSync('data.txt','khela oh jaye');
-    fs.appendFileSync('data.txt',' nahi hoga jaye');
-    const buffer=fs.readFileSync('data.txt',{encoding:'utf8'});
+    //these are async operations so order is not fixedhere
+    fs.writeFile('data.txt','khela oh jaye',(err)=>{
+        if(err){
+            console.log(err);
+        }
+        console.log("data added");
+    });
+    fs.appendFile('data.txt',' nahi hoga jaye',(err)=>{
+        if(err){
+            console.log(err);
+        }
+        console.log("data appended");
+    });
+    const buffer=fs.readFile('data.txt',(err,data)=>{
+        if(err){
+            console.log(err);
+        }
+        console.log(data.toString());
+    });
     console.log(buffer);
 } catch (error) {
     console.log(error)
 }
-fs.unlinkSync('ej.txt');
+fs.unlink('ejs.txt',(err)=>{
+    if(err){
+        console.log(err);
+    }
+    console.log('file deleted');
+});
 
 
-console.log(`checking fs is blocking code`);
+console.log(`proved non blocking code`);
