@@ -1,3 +1,1 @@
-name:skv
-working:no
-ctc expecting:10lpa
+khela oh jaye nahi hoga jaye
