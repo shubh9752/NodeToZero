@@ -1,5 +1,20 @@
 <%- include('partials/head') %>
     <h1>Hi this is home</h1>
+    <div>
+       <% for(let itme of comments){ %>
+            <ul>
+                <li><span><%= itme.id %></span></li>
+                <li><h2><%= itme.username %></h2></li>
+                <li><p><%= itme.comment %></p></li>
+                <li><a href="/comments/<%= itme.id %>">Details</a><span><a href="/comments/<%= itme.id %>/edit"> Edit Comment</a></span></li>
+            </ul>
+            <hr>
+            
+            
+            
+       <% } %>
+    </div>
+    <button><a href="/comments/new">post comment</a></button>
     
 </body>
 </html>
