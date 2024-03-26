@@ -7,6 +7,9 @@
                 <li><h2><%= itme.username %></h2></li>
                 <li><p><%= itme.comment %></p></li>
                 <li><a href="/comments/<%= itme.id %>">Details</a><span><a href="/comments/<%= itme.id %>/edit"> Edit Comment</a></span></li>
+                <form action="/comments/<%= itme.id %>?_method=DELETE" method="POST">
+                    <button>Delete</button>
+                </form>
             </ul>
             <hr>
             

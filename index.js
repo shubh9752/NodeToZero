@@ -1,5 +1,6 @@
 const express= require('express');
 const app = express();
+const methodOverride = require('method-override')
 const path = require('path');
  
 app.set('view engine','ejs');
@@ -9,6 +10,7 @@ app.use(express.static(path.join(__dirname,'public')));
 
 //body parsing middle ware
 app.use(express.urlencoded({extended:true}));
+app.use(methodOverride('_method'));
 
 let comments=[ {
     id:0,
@@ -62,6 +64,23 @@ app.get('/comments/:id/edit',(req,res)=>{
         return comment.id==id;
     });
     res.render('edit',{comment});
+})
+app.patch('/comments/:id',(req,res)=>{
+    const {id}=req.params
+    let comment=comments.find((comment)=>{
+        return comment.id==id;
+    });
+  
+    comment.comment=req.body.comment;
+    res.redirect('/comments');
+})
+
+app.delete('/comments/:id',(req,res)=>{
+    const {id}=req.params
+    comments=comments.filter((comment)=>{return comment.id!=id});
+    // console.log(newcomments);
+    // comments=newcomments;
+    res.redirect('/comments');
 })
 app.listen(8080,()=>{
     console.log('server is running on port 8080');
